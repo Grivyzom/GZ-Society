@@ -1,0 +1,53 @@
+# GZ-Society Plugin Configuration
+
+# Configuration for data storage.
+# storage-type can be "in-memory" or "mysql"
+storage-type = "mysql"
+
+[mysql]
+  host = "127.0.0.1"
+  port = 3306
+  database = "gzsociety"
+  username = "root"
+  password = "password"
+  [mysql.pool-settings]
+    max-pool-size = 10
+    min-idle = 10
+    max-lifetime = 1800000 # 30 minutes
+    connection-timeout = 5000 # 5 seconds
+
+# Messages used throughout the plugin.
+# You can use MiniMessage format for colors and styles.
+# Example: "<red>Hello</red> <bold><blue>World</blue>!"
+[messages]
+  # Help message
+  friend-help = "<yellow>--- Friend Commands ---</yellow>\n<gray>/friend request <player></gray> - Send friend request\n<gray>/friend accept <player></gray> - Accept request\n<gray>/friend deny <player></gray> - Deny request\n<gray>/friend requests</gray> - View pending requests\n<gray>/friend remove <player></gray> - Remove friend\n<gray>/friend best <player></gray> - Mark as best friend\n<gray>/friend list</gray> - List your friends"
+  
+  # General
+  player-not-found = "<red>Player '{player}' was not found or is not online.</red>"
+  
+  # Friend request messages
+  request-sent = "<green>Friend request sent to <white>{player}</white>!</green>"
+  request-received = "<green><white>{player}</white> sent you a friend request! Use <yellow>/friend accept {player}</yellow></green>"
+  request-already-sent = "<yellow>You have already sent a request to {player}.</yellow>"
+  request-accepted = "<green>You are now friends with <white>{player}</white>!</green>"
+  request-accepted-notify = "<green><white>{player}</white> accepted your friend request!</green>"
+  request-denied = "<yellow>Friend request from {player} denied.</yellow>"
+  request-not-found = "<red>No pending request from {player}.</red>"
+  requests-list-header = "<yellow>--- Friend Requests ---</yellow>"
+  
+  # Friend management
+  friend-removed = "<yellow>You have removed <white>{player}</white> from your friends.</yellow>"
+  friend-already-added = "<yellow>{player} is already in your friends list.</yellow>"
+  friend-not-in-list = "<red>{player} is not in your friends list.</red>"
+  friend-cannot-add-self = "<red>You cannot add yourself as a friend!</red>"
+  friend-list-header = "<yellow>--- Your Friends ---</yellow>"
+  friend-list-empty = "<gray>You don't have any friends yet. Use /friend request <player>!</gray>"
+  not-a-friend = "<red>{player} is not your friend.</red>"
+  
+  # Best friends
+  best-friend-added = "<gold>★</gold> <white>{player}</white> is now your best friend!"
+  best-friend-removed = "<yellow>{player} is no longer your best friend.</yellow>"
+  already-best-friend = "<yellow>{player} is already your best friend.</yellow>"
+  not-best-friend = "<red>{player} is not your best friend.</red>"
+

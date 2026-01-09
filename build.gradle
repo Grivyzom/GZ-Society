@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'gc.grivyzom'
+version = '1.1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://repo.papermc.io/repository/maven-public/' }
+    maven { url = 'https://repo.spongepowered.org/repository/maven-public/' } // Official Sponge Repo
+}
+
+dependencies {
+    // Velocity API
+    compileOnly "com.velocitypowered:velocity-api:3.3.0-SNAPSHOT"
+    annotationProcessor "com.velocitypowered:velocity-api:3.3.0-SNAPSHOT"
+
+    // Configuration - We shade (include) this in our plugin jar
+    implementation "org.spongepowered:configurate-core:4.1.2"
+    implementation "me.lucko.configurate:configurate-toml:4.1"
+    implementation "org.spongepowered:configurate-yaml:4.1.2"
+
+    // Database - We shade this too
+    implementation "com.zaxxer:HikariCP:5.1.0"
+    implementation "mysql:mysql-connector-java:8.0.33"
+}
+
+def targetJavaVersion = 17
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.getRelease().set(targetJavaVersion)
+}
+
+shadowJar {
+    // We need to relocate these shaded dependencies to avoid conflicts with other plugins
+    relocate 'org.spongepowered.configurate', 'gc.grivyzom.gZSociety.lib.configurate'
+    relocate 'com.zaxxer.hikari', 'gc.grivyzom.gZSociety.lib.hikaricp'
+    relocate 'com.mysql', 'gc.grivyzom.gZSociety.lib.mysql'
+    
+    // The output jar name
+    archiveBaseName.set('GZ-Society')
+    archiveClassifier.set(null) // Do not append 'all' to the jar name
+    archiveVersion.set(project.version)
+}
+
+// Make the 'build' task depend on 'shadowJar'
+tasks.build.dependsOn(shadowJar)
+
+// Ensure processResources runs before shadowJar
+tasks.shadowJar.dependsOn(tasks.processResources)

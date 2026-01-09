@@ -1,0 +1,103 @@
+# Audit Report for GZ-Society Plugin
+# Generated on: 2026-01-08
+
+project_summary:
+  name: GZ-Society
+  type: Velocity Minecraft Plugin
+  entry_point: gc.grivyzom.gZSociety.Main
+  description: >
+    A social plugin for Velocity-powered Minecraft servers, providing a friend system
+    with requests, friend lists, and administrative controls.
+
+architecture_overview:
+  description: >
+    The plugin follows a standard Velocity plugin architecture. It uses an asynchronous,
+    cache-based approach for managing player data to avoid blocking the main server thread.
+    A central `PlayerManager` handles an in-memory cache of `SocialPlayer` objects,
+    which are loaded from and saved to a persistent storage backend (SQL or in-memory)
+    via a `Storage` interface. Commands and event listeners interact with the `PlayerManager`
+    to perform actions.
+
+core_components:
+  main_class:
+    path: src/main/java/gc/grivyzom/gZSociety/Main.java
+    description: >
+      Initializes and wires all components, including configuration, storage,
+      commands, and event listeners. Manages the plugin's lifecycle.
+  commands:
+    - name: /friend
+      path: src/main/java/gc/grivyzom/gZSociety/commands/FriendCommand.java
+      description: >
+        The primary user-facing command for managing friendships (add, remove, accept, deny).
+        It contains the core logic for social interactions.
+    - name: /societyadmin
+      path: src/main/java/gc/grivyzom/gZSociety/commands/SocietyAdminCommand.java
+      description: >
+        Administrative command for plugin management, most notably for reloading
+        the configuration.
+  data_management:
+    player_manager:
+      path: src/main/java/gc/grivyzom/gZSociety/manager/PlayerManager.java
+      description: >
+        Manages the in-memory cache of `SocialPlayer` data. It loads player data
+        asynchronously when they join and saves it when they leave. This is the central
+        point for accessing player state.
+    social_player_object:
+      path: src/main/java/gc/grivyzom/gZSociety/objects/SocialPlayer.java
+      description: >
+        The main data model representing a player's social data (friends, requests).
+        Uses thread-safe collections to prevent internal corruption.
+    storage_interface:
+      path: src/main/java/gc/grivyzom/gZSociety/storage/Storage.java
+      description: >
+        An interface defining the contract for data persistence (e.g., `loadPlayer`,
+        `savePlayer`). This decouples the core logic from the specific database
+        implementation (like SQLStorage).
+
+identified_risks_and_improvements:
+  - risk: Data Inconsistency (High)
+    file: src/main/java/gc/grivyzom/gZSociety/commands/FriendCommand.java
+    description: >
+      When two players become friends, their respective `SocialPlayer` objects are
+      modified and saved in separate, non-atomic operations. If a server crash
+      or error occurs after saving the first player but before saving the second,
+      the friend relationship will be inconsistent (one player has the friend, the
+      other does not).
+    recommendation: >
+      Implement a transactional or two-phase commit system for operations that
+      modify multiple player records. For example, a `friendshipService` that
+      ensures both players are successfully saved or neither is.
+
+  - risk: Incomplete Configuration Reload (Medium)
+    file: src/main/java/gc/grivyzom/gZSociety/commands/SocietyAdminCommand.java
+    description: >
+      The `reload` subcommand only reloads the main configuration file. It does not
+      reload the language files (`en.yml`, `es.yml`) or re-initialize the storage
+      system if the database credentials change.
+    recommendation: >
+      Expand the reload logic to re-initialize all necessary components (ConfigManager,
+      LanguageManager, and potentially the Storage connection pool) to make the
+      reload feature fully functional and reliable.
+
+  - risk: Offline Player Interaction Limitation (Medium)
+    file: src/main/java/gc/grivyzom/gZSociety/manager/PlayerManager.java
+    description: >
+      The plugin's logic relies on the `PlayerManager` cache, which only contains
+      data for currently online or recently online players. This prevents actions
+      like removing a friend who has been offline for a long time.
+    recommendation: >
+      Modify repository/service layers to load player data directly from persistent
+      storage (`Storage` interface) when it's not available in the cache. This
+      would allow interactions with any player who has ever joined the server.
+
+key_files_for_review:
+  - path: src/main/java/gc/grivyzom/gZSociety/Main.java
+    reason: Entry point and component orchestration.
+  - path: src/main/java/gc/grivyzom/gZSociety/commands/FriendCommand.java
+    reason: Core functionality and location of the critical data consistency risk.
+  - path: src/main/java/gc/grivyzom/gZSociety/manager/PlayerManager.java
+    reason: Central to state management and source of the offline player limitation.
+  - path: src/main/java/gc/grivyzom/gZSociety/storage/Storage.java
+    reason: Defines the crucial persistence contract.
+  - path: src/main/java/gc/grivyzom/gZSociety/objects/SocialPlayer.java
+    reason: The core data model for the entire plugin.

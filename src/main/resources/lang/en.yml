@@ -1,0 +1,55 @@
+# GZ-Society - English (en)
+# Language file
+
+# Localized command names
+# These are registered as aliases on server startup
+commands:
+  friend: "friend"
+  # Subcommands
+  request: "request"
+  accept: "accept"
+  deny: "deny"
+  remove: "remove"
+  best: "best"
+  list: "list"
+  requests: "requests"
+
+# Help messages
+friend-help: "<yellow>--- Friend Commands ---</yellow>\n<gray>/{cmd} request <player></gray> - Send friend request\n<gray>/{cmd} accept <player></gray> - Accept request\n<gray>/{cmd} deny <player></gray> - Deny request\n<gray>/{cmd} requests</gray> - View requests\n<gray>/{cmd} remove <player></gray> - Remove friend\n<gray>/{cmd} best <player></gray> - Mark best friend\n<gray>/{cmd} list</gray> - List friends"
+
+# General
+player-not-found: "<red>Player '{player}' was not found or is not online.</red>"
+
+# Friend requests
+request-sent: "<green>Friend request sent to <white>{player}</white>!</green>"
+request-received: "<green><white>{player}</white> sent you a friend request! Use <yellow>/{cmd} accept {player}</yellow></green>"
+request-already-sent: "<yellow>You have already sent a request to {player}.</yellow>"
+request-accepted: "<green>You are now friends with <white>{player}</white>!</green>"
+request-accepted-notify: "<green><white>{player}</white> accepted your friend request!</green>"
+request-denied: "<yellow>Friend request from {player} denied.</yellow>"
+request-not-found: "<red>No pending request from {player}.</red>"
+requests-list-header: "<yellow>--- Friend Requests ---</yellow>"
+
+# Friend management
+friend-removed: "<yellow>You have removed <white>{player}</white> from your friends.</yellow>"
+friend-already-added: "<yellow>{player} is already in your friends list.</yellow>"
+friend-not-in-list: "<red>{player} is not in your friends list.</red>"
+friend-cannot-add-self: "<red>You cannot add yourself as a friend!</red>"
+friend-list-header: "<yellow>--- Your Friends ---</yellow>"
+friend-list-empty: "<gray>You don't have any friends yet. Use /{cmd} request <player>!</gray>"
+not-a-friend: "<red>{player} is not your friend.</red>"
+
+# Best friends
+best-friend-added: "<gold>★</gold> <white>{player}</white> is now your best friend!"
+best-friend-removed: "<yellow>{player} is no longer your best friend.</yellow>"
+already-best-friend: "<yellow>{player} is already your best friend.</yellow>"
+not-best-friend: "<red>{player} is not your best friend.</red>"
+
+# Notifications
+friend-joined: "<green>➤ Your friend <white>{player}</white> joined!</green>"
+friend-left: "<gray>➤ Your friend <white>{player}</white> left.</gray>"
+bestfriend-joined-title: "<gold>★ {player} is here!</gold>"
+bestfriend-joined-subtitle: "<yellow>Your best friend connected</yellow>"
+notifications-enabled: "<green>Friend notifications enabled.</green>"
+notifications-disabled: "<yellow>Friend notifications disabled.</yellow>"
+

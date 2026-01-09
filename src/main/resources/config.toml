@@ -1,0 +1,21 @@
+# GZ-Society Plugin Configuration
+
+# Language setting - available: "es", "en"
+# Language files are located in the lang/ folder
+language = "es"
+
+# Configuration for data storage.
+# storage-type can be "in-memory" or "mysql"
+storage-type = "mysql"
+
+[mysql]
+  host = "127.0.0.1"
+  port = 3306
+  database = "gzsociety"
+  username = "root"
+  password = "password"
+  [mysql.pool-settings]
+    max-pool-size = 10
+    min-idle = 10
+    max-lifetime = 1800000 # 30 minutes
+    connection-timeout = 5000 # 5 seconds

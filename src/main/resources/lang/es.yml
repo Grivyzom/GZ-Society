@@ -1,0 +1,55 @@
+# GZ-Society - Español (es)
+# Archivo de idioma por defecto
+
+# Nombres de comandos localizados
+# Estos se registran como aliases al iniciar el servidor
+commands:
+  friend: "amigo"
+  # Subcomandos
+  request: "solicitar"
+  accept: "aceptar"
+  deny: "rechazar"
+  remove: "eliminar"
+  best: "mejor"
+  list: "lista"
+  requests: "solicitudes"
+
+# Mensajes de ayuda
+friend-help: "<yellow>--- Comandos de Amigos ---</yellow>\n<gray>/{cmd} request <jugador></gray> - Enviar solicitud\n<gray>/{cmd} accept <jugador></gray> - Aceptar solicitud\n<gray>/{cmd} deny <jugador></gray> - Rechazar solicitud\n<gray>/{cmd} requests</gray> - Ver solicitudes\n<gray>/{cmd} remove <jugador></gray> - Eliminar amigo\n<gray>/{cmd} best <jugador></gray> - Marcar mejor amigo\n<gray>/{cmd} list</gray> - Lista de amigos"
+
+# General
+player-not-found: "<red>El jugador '{player}' no fue encontrado o no está en línea.</red>"
+
+# Solicitudes de amistad
+request-sent: "<green>¡Solicitud de amistad enviada a <white>{player}</white>!</green>"
+request-received: "<green><white>{player}</white> te envió una solicitud de amistad. Usa <yellow>/{cmd} accept {player}</yellow></green>"
+request-already-sent: "<yellow>Ya has enviado una solicitud a {player}.</yellow>"
+request-accepted: "<green>¡Ahora eres amigo de <white>{player}</white>!</green>"
+request-accepted-notify: "<green><white>{player}</white> aceptó tu solicitud de amistad!</green>"
+request-denied: "<yellow>Solicitud de amistad de {player} rechazada.</yellow>"
+request-not-found: "<red>No hay solicitud pendiente de {player}.</red>"
+requests-list-header: "<yellow>--- Solicitudes de Amistad ---</yellow>"
+
+# Gestión de amigos
+friend-removed: "<yellow>Has eliminado a <white>{player}</white> de tus amigos.</yellow>"
+friend-already-added: "<yellow>{player} ya está en tu lista de amigos.</yellow>"
+friend-not-in-list: "<red>{player} no está en tu lista de amigos.</red>"
+friend-cannot-add-self: "<red>¡No puedes agregarte a ti mismo!</red>"
+friend-list-header: "<yellow>--- Tus Amigos ---</yellow>"
+friend-list-empty: "<gray>No tienes amigos aún. ¡Usa /{cmd} request <jugador>!</gray>"
+not-a-friend: "<red>{player} no es tu amigo.</red>"
+
+# Mejores amigos
+best-friend-added: "<gold>★</gold> ¡<white>{player}</white> ahora es tu mejor amigo!"
+best-friend-removed: "<yellow>{player} ya no es tu mejor amigo.</yellow>"
+already-best-friend: "<yellow>{player} ya es tu mejor amigo.</yellow>"
+not-best-friend: "<red>{player} no es tu mejor amigo.</red>"
+
+# Notificaciones
+friend-joined: "<green>➤ Tu amigo <white>{player}</white> se ha conectado!</green>"
+friend-left: "<gray>➤ Tu amigo <white>{player}</white> se ha desconectado.</gray>"
+bestfriend-joined-title: "<gold>★ ¡{player} está aquí!</gold>"
+bestfriend-joined-subtitle: "<yellow>Tu mejor amigo se conectó</yellow>"
+notifications-enabled: "<green>Notificaciones de amigos activadas.</green>"
+notifications-disabled: "<yellow>Notificaciones de amigos desactivadas.</yellow>"
+
